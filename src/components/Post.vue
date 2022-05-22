@@ -1,5 +1,7 @@
 <template>
+
   <div>
+      
     <b-card
       :title="post.title | truncate(20)"
       tag="article"
@@ -15,7 +17,8 @@
         <b-button v-b-modal.modal-xl variant="primary" @click="onClickButton" href="#">Show comments</b-button>
       </template>
     </b-card>
-  </div>
+    </div>
+  
 </template>
 
 <script>
@@ -23,12 +26,14 @@ export default {
   name: "Post",
   props: {
     post: Object,
+    
   },
    methods: {
      onClickButton () {
          this.$emit('clicked', this.post.id)
      }
-   }
+   },
+  
 };
 </script>
 

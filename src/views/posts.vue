@@ -21,15 +21,15 @@
               placeholder="Enter body text"
             >
             </b-form-input>
-            {{ filter }}
-            {{ filteredPosts }}
+            <div v-for="title of filteredPosts" :key="title.id">{{title.title}}</div>
+            
           </div>
         </div>
       </div>
       <div class="col-10">
         <h3>Posts</h3>
         <div class="row">
-          <div v-for="(post, index) in posts" :key="index" class="col-2">
+          <div v-for="post in posts" :key="post" class="col-2">
             <Post
               :post="post"
               v-model="openedPostId"
@@ -74,11 +74,24 @@ export default {
       .catch((error) => Promise.reject(error));
   },
   computed: {
+    //filteredPosts() {
+    //  return this.posts.filter((el) => {
+    //    el.title == this.filter.title;
+    //  });
+    //},
     filteredPosts() {
-      return this.posts.filter((el) => {
-        el.title == this.filter.title;
-      });
-    },
+      if (this.filter.title) {
+        return this.posts.filter(item => {
+          return this.filter.title
+            .toLowerCase()
+            .split(" ")
+            .every(v => item.title.toLowerCase().includes(v));
+        });
+      } else {
+        return this.posts;
+      }
+    }
+  
   },
   methods: {
     getPostId(value) {
