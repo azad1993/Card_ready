@@ -21,15 +21,14 @@
               placeholder="Enter body text"
             >
             </b-form-input>
-            <div v-for="title of filteredPosts" :key="title.id">{{title.title}}</div>
-            
           </div>
         </div>
       </div>
       <div class="col-10">
         <h3>Posts</h3>
         <div class="row">
-          <div v-for="post in posts" :key="post" class="col-2">
+          <!--<div v-for="post in posts" :key="post" class="col-2">-->
+            <div v-for="post in filteredPosts" :key="post">
             <Post
               :post="post"
               v-model="openedPostId"
@@ -87,7 +86,14 @@ export default {
             .split(" ")
             .every(v => item.title.toLowerCase().includes(v));
         });
-      } else {
+      } else if(this.filter.body) {
+        return this.posts.filter(item => {
+          return this.filter.body
+            .toLowerCase()
+            .split(" ")
+            .every(v => item.body.toLowerCase().includes(v));
+        })
+        } else {
         return this.posts;
       }
     }
